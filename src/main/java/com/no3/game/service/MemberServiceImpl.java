@@ -1,4 +1,4 @@
-package no3.game.service;
+package com.no3.game.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

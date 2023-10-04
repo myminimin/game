@@ -1,6 +1,6 @@
-package no3.game.repository;
+package com.no3.game.repository;
 
-import no3.game.entity.Order;
+import com.no3.game.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.domain.Pageable;

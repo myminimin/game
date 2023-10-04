@@ -1,4 +1,4 @@
-package no3.game.constant;
+package com.no3.game.constant;
 
 public enum ItemSellStatus {
     SELL, SOLD_OUT

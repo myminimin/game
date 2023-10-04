@@ -1,6 +1,6 @@
-package no3.game.service;
+package com.no3.game.service;
 
-import no3.game.dto.MemberJoinDto;
+import com.no3.game.dto.MemberJoinDto;
 
 public interface MemberService {
     static class MidExistException extends Exception {

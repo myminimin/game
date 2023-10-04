@@ -1,9 +1,9 @@
-package no3.game.entity;
+package com.no3.game.entity;
 
 import lombok.*;
 
 import javax.persistence.*;
-import no3.game.constant.ItemSellStatus;
+import com.no3.game.constant.ItemSellStatus;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;

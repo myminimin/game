@@ -1,8 +1,8 @@
-package no3.game.entity;
+package com.no3.game.entity;
 
 import lombok.*;
-import no3.game.constant.Role;
-import no3.game.dto.MemberJoinDto;
+import com.no3.game.constant.Role;
+import com.no3.game.dto.MemberJoinDto;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
@@ -19,7 +19,7 @@ public class Member extends BaseEntity {
     @Id
     @Column(name="member_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
     private String name;
 
     @Column(unique = true) // 이메일을 유일하게 구분(동일값이 db에 들어올 수 없음)

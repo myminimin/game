@@ -1,4 +1,4 @@
-package no3.game.dto;
+package com.no3.game.dto;
 
 import lombok.Getter;
 import lombok.Setter;

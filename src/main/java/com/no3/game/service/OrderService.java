@@ -1,10 +1,10 @@
-package no3.game.service;
+package com.no3.game.service;
 
 import lombok.RequiredArgsConstructor;
-import no3.game.entity.Member;
-import no3.game.entity.Order;
-import no3.game.repository.MemberRepository;
-import no3.game.repository.OrderRepository;
+import com.no3.game.entity.Member;
+import com.no3.game.entity.Order;
+import com.no3.game.repository.MemberRepository;
+import com.no3.game.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

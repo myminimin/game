@@ -1,8 +1,8 @@
-package no3.game.entity;
+package com.no3.game.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import no3.game.constant.OrderStatus;
+import com.no3.game.constant.OrderStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

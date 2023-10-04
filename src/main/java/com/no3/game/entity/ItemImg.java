@@ -1,4 +1,4 @@
-package no3.game.entity;
+package com.no3.game.entity;
 
 import lombok.*;
 

@@ -1,8 +1,6 @@
-package no3.game.dto;
+package com.no3.game.dto;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
