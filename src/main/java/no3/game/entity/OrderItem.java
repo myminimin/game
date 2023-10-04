@@ -20,24 +20,18 @@ public class OrderItem extends BaseEntity {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    private int orderPrice; //주문가격
+    private int orderPrice; // 결제 금액
 
 
-    public static OrderItem createOrderItem(Item item, int count){
+    public static OrderItem createOrderItem(Item item){
         OrderItem orderItem = new OrderItem();
         orderItem.setItem(item);
         orderItem.setOrderPrice(item.getPrice());
         return orderItem;
-    }
+    } // 주문할 상품의 정보를 담은 객체 생성
 
     public int getTotalPrice(){
-
         return orderPrice;
-    }
-
-    public void cancel() {
-
-        this.getItem();
-    }
-
+    } // 결제 금액 전달용
+    
 }

@@ -17,9 +17,9 @@ import java.time.LocalDate;
 @ToString
 public class Item extends BaseEntity {
 
-    @Id //테이블에 기본키로 사용(pk)
-    @Column(name="item_id") //필드와 컬럼 매핑
-    @GeneratedValue(strategy = GenerationType.AUTO)  //자동번호 생성
+    @Id
+    @Column(name="item_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;      // 상품 코드
 
     @Column(nullable = false, length = 50) // not null 설정 및 길이 지정, nullable = false : not null
@@ -43,11 +43,5 @@ public class Item extends BaseEntity {
     @Enumerated(EnumType.STRING)  // enum 타입 매핑
     private ItemSellStatus itemSellStatus; //상품 판매 상태
 
-/*    public void updateItem(ItemFormDto itemFormDto){
-        this.itemNm = itemFormDto.getItemNm();
-        this.price = itemFormDto.getPrice();
-        this.itemDetail = itemFormDto.getItemDetail();
-        this.itemSellStatus = itemFormDto.getItemSellStatus();
-    }*/
 
 }

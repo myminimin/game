@@ -10,8 +10,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(exclude = {"movie","member"})
-public class Review {
+@ToString(exclude = {"item","member"})
+public class Review extends BaseEntity {
 
     @Id
     @Column(name="review_id")

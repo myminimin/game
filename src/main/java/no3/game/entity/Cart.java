@@ -22,13 +22,10 @@ public class Cart extends BaseEntity {
     @JoinColumn(name="member_id")
     private Member member;
 
-    private int count; // 카트에 담긴 총 상품 개수
-
     public static Cart createCart(Member member) {
         Cart cart = new Cart();
-        cart.setCount(0);
         cart.setMember(member);
         return cart;
-    }
+    } // 회원 하나당 하나의 장바구니를 가진다
 
 }
