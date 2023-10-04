@@ -1,11 +1,14 @@
 package no3.game.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 
 @Entity
 @Getter @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="cart_item")
 public class CartItem extends BaseEntity {
 
@@ -22,22 +25,5 @@ public class CartItem extends BaseEntity {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    private int count;
-
-    public static CartItem createCartItem(Cart cart, Item item, int count) {
-        CartItem cartItem = new CartItem();
-        cartItem.setCart(cart);
-        cartItem.setItem(item);
-        cartItem.setCount(count);
-        return cartItem;
-    }
-
-    public void addCount(int count){
-        this.count += count;
-    }
-
-    public void updateCount(int count){
-        this.count = count;
-    }
 
 }

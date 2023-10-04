@@ -1,9 +1,9 @@
 package no3.game.entity;
 
-
-import com.shop.constant.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
+import no3.game.constant.OrderStatus;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
