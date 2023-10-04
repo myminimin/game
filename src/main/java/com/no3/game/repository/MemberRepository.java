@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface MemberRepository extends JpaRepository<Member, String> {
 
     Member findByEmail(String email);
+    // 중복된 회원이 있는지 검사하기 위해서 이메일로 회원을 검사할 수 있게 쿼리 메소드를 작성
 
     @Modifying
     @Transactional

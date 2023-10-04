@@ -50,6 +50,9 @@ dependencies {
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
     /* validation */
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    /* Thymeleaf의 레이아웃 기능 */
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
+
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 
