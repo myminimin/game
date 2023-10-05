@@ -48,12 +48,17 @@ dependencies {
     /* querydsl*/
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
-    /* validation */
+    /* 객체의 값을 효율적으로 검증해주는 validation */
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     /* Thymeleaf의 레이아웃 기능 */
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
+    /* Test용 H2 Database 라이브러리 */
+    runtimeOnly 'com.h2database:h2'
+
 
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+
 
 
 }
