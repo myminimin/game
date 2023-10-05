@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,5 +41,22 @@ public class ReviewRepositoryTest {
             reviewRepository.save(itemReview);
         });
     }
+
+    @Test
+    public void testGetItemReviews() {
+
+        Item item = Item.builder().id(8L).build();
+
+        List<Review> result = reviewRepository.findByItem(item);
+
+        result.forEach(itemReview -> {
+
+            System.out.print(itemReview.getId());
+            System.out.print("\t"+itemReview.getGrade());
+            System.out.print("\t"+itemReview.getText());
+            System.out.print("\t"+itemReview.getMember().getEmail());
+            System.out.println("---------------------------");
+        });
+    } // item id에 해당하는 review 가지고 오기
 
 }

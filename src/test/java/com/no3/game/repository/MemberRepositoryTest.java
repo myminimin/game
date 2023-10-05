@@ -5,6 +5,8 @@ import com.no3.game.entity.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.IntStream;
 
@@ -15,6 +17,8 @@ public class MemberRepositoryTest {
 
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @Test
     public void insertMembers() {
@@ -31,4 +35,22 @@ public class MemberRepositoryTest {
 
     }
 
+    @Commit
+    @Transactional
+    @Test
+    public void testDeleteMember() {
+
+        Long member_id = 23L; // Member의 id
+
+        Member member = Member.builder().id(member_id).build();
+
+        //기존
+        //memberRepository.deleteById(mid);
+        //reviewRepository.deleteByMember(member);
+
+        //순서 주의
+        reviewRepository.deleteByMember(member);
+        memberRepository.deleteById(member_id);
+
+    }
 }
