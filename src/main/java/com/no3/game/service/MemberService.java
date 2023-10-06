@@ -31,6 +31,7 @@ public class MemberService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        // 로그인할 유저의 email을 파라미터로 전달 받음
 
         Member member = memberRepository.findByEmail(email);
 

@@ -31,12 +31,12 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/")          // 로그아웃 성공 시 이동할 URL 설정
         ;
 
-        /*http.authorizeRequests()
-                .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
-                .requestMatchers("/", "/members/**", "/item/**", "/images/**").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
+        http.authorizeRequests()
+                .mvcMatchers("/css/**", "/js/**", "/img/**").permitAll()
+                .mvcMatchers("/", "/members/**", "/item/**", "/images/**").permitAll()
+                .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
-        ; */
+        ;
 
         http.exceptionHandling()
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint())

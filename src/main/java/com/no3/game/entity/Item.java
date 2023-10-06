@@ -20,7 +20,7 @@ public class Item extends BaseEntity {
     @Id
     @Column(name="item_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;      // 상품 코드
+    private Long id;
 
     @Column(nullable = false, length = 50) // not null 설정 및 길이 지정, nullable = false : not null
     private String title; //상품명

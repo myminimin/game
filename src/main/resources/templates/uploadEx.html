@@ -67,12 +67,14 @@
       str += "<div>";
       str += "<img src='/display?fileName="+arr[i].thumbnailURL+"'>";
       str += "<button class='removeBtn' data-name='"+arr[i].imageURL +"'>REMOVE</button>"
+      // 'data-name'이라는 커스텀 속성을 이용해서 삭제해야 하는 파일의 이름을 알아낸다
       str += "</div>";
     }
     divArea.append(str);
 
   }
 
+  /* 'REMOVE' 버튼 클릭 시 동작하는 부분 */
   $(".uploadResult").on("click", ".removeBtn", function(e){
 
     var target = $(this);

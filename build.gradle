@@ -54,7 +54,8 @@ dependencies {
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
     /* Test용 H2 Database 라이브러리 */
     runtimeOnly 'com.h2database:h2'
-
+    /* 섬네일 */
+    implementation 'net.coobird:thumbnailator:0.4.19'
 
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
