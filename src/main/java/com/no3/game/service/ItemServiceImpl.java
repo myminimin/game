@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +69,26 @@ public class ItemServiceImpl implements ItemService {
         );
 
         return new PageResultDTO<>(result, fn);
+    }
+
+    @Override
+    public ItemDto getItem(Long id) {
+
+        List<Object[]> result = itemRepository.getItemWithAll(id);
+
+        Item item = (Item) result.get(0)[0];
+
+        List<ItemImg> itemImgList = new ArrayList<>();
+
+        result.forEach(arr -> {
+            ItemImg  itemImg = (ItemImg)arr[1];
+            itemImgList.add(itemImg);
+        });
+
+        Double avg = (Double) result.get(0)[2];
+        Long reviewCnt = (Long) result.get(0)[3];
+
+        return entitiesToDTO(item, itemImgList, avg, reviewCnt);
     }
 
 }

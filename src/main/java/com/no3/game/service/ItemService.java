@@ -10,6 +10,7 @@ import com.no3.game.entity.ItemImg;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public interface ItemService {
@@ -17,6 +18,8 @@ public interface ItemService {
     Long register(ItemDto itemDto);
 
     PageResultDTO<ItemDto, Object[]> getList(PageRequestDTO requestDTO); //목록 처리
+
+    ItemDto getItem(Long id);
 
     default ItemDto entitiesToDTO(Item item, List<ItemImg> itemImages, Double avg, Long reviewCnt){
         ItemDto itemDto = ItemDto.builder()
@@ -26,7 +29,8 @@ public interface ItemService {
                 .modDate(item.getModDate())
                 .build();
 
-        List<ItemImgDto> itemImgDtoList = itemImages.stream().map(itemImg -> {
+        List<ItemImgDto> itemImgDtoList = itemImages.stream().filter(Objects::nonNull).map(itemImg -> {
+            // .filter(Objects::nonNull) ItemImg 객체가 null이 아닌지를 확인
             return ItemImgDto.builder().imgName(itemImg.getImgName())
                     .path(itemImg.getPath())
                     .uuid(itemImg.getUuid())
