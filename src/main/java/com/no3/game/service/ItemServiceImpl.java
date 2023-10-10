@@ -38,9 +38,11 @@ public class ItemServiceImpl implements ItemService {
 
         itemRepository.save(item);
 
-        itemImgList.forEach(itemImg -> {
-            imgRepository.save(itemImg);
-        });
+        if (itemImgList != null) { // itemImgList가 null이 아닌 경우에만 foreach 실행
+            itemImgList.forEach(itemImg -> {
+                imgRepository.save(itemImg);
+            });
+        }
 
         return item.getId();
     }
