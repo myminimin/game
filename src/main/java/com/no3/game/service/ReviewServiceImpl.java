@@ -46,7 +46,7 @@ public class ReviewServiceImpl implements ReviewService{
 
         repository.save(review);
         return review.getId();
-    }
+    } // 리뷰 작성
 
     @Override
     public PageResultDTO<ReviewDto, Object[]> getList(PageRequestDTO pageRequestDTO) {
