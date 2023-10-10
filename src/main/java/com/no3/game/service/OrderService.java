@@ -24,7 +24,9 @@ public class OrderService {
 
     @Transactional(readOnly = true)
     public boolean validateOrder(Long orderId, String email){
-        Member curMember = memberRepository.findByEmail(email); // 현재 로그인한 유저의 이메일 가져오기
+        Optional<Member> memberOptional = memberRepository.findByEmail(email);
+        Member curMember = memberOptional.orElseThrow(() -> new EntityNotFoundException("Member not found with email: " + email));
+
         Order order = orderRepository.findById(orderId) // 주문 정보 가져오기
                 .orElseThrow(EntityNotFoundException::new);
         Member savedMember = order.getMember(); // 주문 정보에 있는 유저의 정보를 가져오기
