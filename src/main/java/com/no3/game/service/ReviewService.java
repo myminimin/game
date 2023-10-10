@@ -1,5 +1,7 @@
 package com.no3.game.service;
 
+import com.no3.game.dto.PageRequestDTO;
+import com.no3.game.dto.PageResultDTO;
 import com.no3.game.dto.ReviewDto;
 import com.no3.game.entity.Item;
 import com.no3.game.entity.Member;
@@ -8,6 +10,8 @@ import com.no3.game.entity.Review;
 public interface ReviewService {
 
     Long register(ReviewDto dto); // 리뷰 작성
+
+    PageResultDTO<ReviewDto, Object[]> getList(PageRequestDTO pageRequestDTO);
 
     default Review dtoToEntity(ReviewDto dto) {
 

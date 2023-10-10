@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<div layout:fragment="content">
+
+    <!--<h1 class="mt-4">Review List Test Page
+        <span>
+                <a th:href="@{/review/register}">
+                    <button type="button" class="btn btn-outline-primary">REGISTER
+                    </button>
+                </a>
+            </span>
+    </h1>-->
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Review</th>
+            <th scope="col">Writer</th>
+            <th scope="col">Grade</th>
+            <th scope="col">Regdate</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="dto : ${result.dtoList}" >
+            <th scope="row">
+                <a th:href="@{/review/read(id = ${dto.id},
+                    page= ${result.page},
+                    type=${pageRequestDTO.type} ,
+                    keyword = ${pageRequestDTO.keyword})}">
+                    [[${dto.id}]]
+                </a>
+            </th>
+            <td>[[${dto.itemTitle}]] ----------------</td>
+            <td>[[${dto.text}]] ----------------</td>
+            <td>[[${dto.writerName}]] <small>[[${dto.writerEmail}]]</small> </td>
+            <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
+        </tr>
+
+
+
+        </tbody>
+    </table>
+
+</div>
+
+</html>

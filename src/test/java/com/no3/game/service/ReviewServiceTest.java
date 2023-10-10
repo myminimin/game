@@ -1,5 +1,7 @@
 package com.no3.game.service;
 
+import com.no3.game.dto.PageRequestDTO;
+import com.no3.game.dto.PageResultDTO;
 import com.no3.game.dto.ReviewDto;
 import com.no3.game.entity.Item;
 import com.no3.game.repository.ItemRepository;
@@ -29,6 +31,18 @@ class ReviewServiceTest {
 
         Long id = reviewService.register(dto);
 
+    }
+
+    @Test
+    public void testList() {
+
+        PageRequestDTO pageRequestDTO = new PageRequestDTO();
+
+        PageResultDTO<ReviewDto, Object[]> result = reviewService.getList(pageRequestDTO);
+
+        for (ReviewDto reviewDto : result.getDtoList()) {
+            System.out.println(reviewDto);
+        }
     }
 
 

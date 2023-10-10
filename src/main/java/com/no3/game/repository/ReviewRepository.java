@@ -3,6 +3,9 @@ package com.no3.game.repository;
 import com.no3.game.entity.Item;
 import com.no3.game.entity.Member;
 import com.no3.game.entity.Review;
+import com.no3.game.repository.search.SearchReviewRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -10,7 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ReviewRepository extends JpaRepository<Review, Long> {
+public interface ReviewRepository extends JpaRepository<Review, Long>, SearchReviewRepository {
 
     @EntityGraph(attributePaths = {"member"}, type = EntityGraph.EntityGraphType.FETCH)
     List<Review> findByItem(Item item);
@@ -20,4 +23,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Modifying
     @Query("delete from Review mr where mr.member = :member")
     void deleteByMember(Member member);
+
+    @Query(value ="SELECT r, m, i FROM Review r LEFT JOIN r.member m LEFT JOIN r.item i ")
+    Page<Object[]> getReviewWithAll(Pageable pageable);
 }
