@@ -41,8 +41,8 @@
             <th scope="col">#</th>
             <th scope="col">Title</th>
             <th scope="col">Review</th>
-            <th scope="col">Writer</th>
             <th scope="col">Grade</th>
+            <th scope="col">Writer</th>
             <th scope="col">Regdate</th>
         </tr>
         </thead>
@@ -57,10 +57,11 @@
                     [[${dto.id}]]
                 </a>
             </th>
-            <td>[[${dto.itemTitle}]] ----------------</td>
+            <td>[[${dto.itemNm}]] ----------------</td>
             <td>[[${dto.text}]] ----------------</td>
+            <td>[[${dto.grade}]] ----------------</td>
             <td>[[${dto.writerName}]] <small>[[${dto.writerEmail}]]</small> </td>
-            <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
+            <td>[[${#temporals.format(dto.regTime, 'yyyy/MM/dd')}]]</td>
         </tr>
 
         </tbody>

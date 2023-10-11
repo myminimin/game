@@ -1,5 +1,6 @@
 package com.no3.game.entity;
 
+import com.no3.game.dto.ItemFormDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -43,5 +44,11 @@ public class Item extends BaseEntity {
     @Enumerated(EnumType.STRING)  // enum 타입 매핑
     private ItemSellStatus itemSellStatus; //상품 판매 상태
 
+    public void updateItem(ItemFormDto itemFormDto){
+        this.title = itemFormDto.getItemNm();
+        this.price = itemFormDto.getPrice();
+        this.detail = itemFormDto.getItemDetail();
+        this.itemSellStatus = itemFormDto.getItemSellStatus();
+    }
 
 }

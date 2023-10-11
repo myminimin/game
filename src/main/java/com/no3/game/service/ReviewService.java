@@ -13,9 +13,12 @@ public interface ReviewService {
 
     PageResultDTO<ReviewDto, Object[]> getList(PageRequestDTO pageRequestDTO);
 
+    ReviewDto get(Long id);
+    void modify(ReviewDto reviewDto);
+
     default Review dtoToEntity(ReviewDto dto) {
 
-        Item item = Item.builder().title(dto.getItemTitle()).build();
+        Item item = Item.builder().title(dto.getItemNm()).build();
         Member member = Member.builder().email(dto.getWriterEmail()).build();
 
         Review review = Review.builder()
@@ -32,10 +35,10 @@ public interface ReviewService {
 
         ReviewDto reviewDto = ReviewDto.builder()
                 .id(review.getId())
-                .itemTitle(item.getTitle())
+                .itemNm(item.getTitle())
                 .text(review.getText())
-                .regDate(review.getRegDate())
-                .modDate(review.getModDate())
+                .regTime(review.getRegTime())
+                .updateTime(review.getUpdateTime())
                 .writerEmail(member.getEmail())
                 .writerName(member.getName())
                 .build();

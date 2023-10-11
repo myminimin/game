@@ -56,6 +56,9 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     /* 섬네일 */
     implementation 'net.coobird:thumbnailator:0.4.19'
+    /* modelmapper */
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
+
 
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 

@@ -31,18 +31,17 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/")          // 로그아웃 성공 시 이동할 URL 설정
         ;
 
-        http.authorizeRequests()
-                .mvcMatchers("/css/**", "/js/**", "/img/**").permitAll()
-                .mvcMatchers("/", "/members/**", "/item/**", "/images/**").permitAll()
+        http.authorizeRequests()//메소드는 URL 패턴에 따른 접근 권한을 설정
+                .mvcMatchers("/css/**","js/**","/img/**").permitAll()
+                .mvcMatchers("/", "/members/**", "/item/**","/images/**").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
-        ;
+                //'/admin/**' 패턴은 "ADMIN" 역할을 가진 사용자에게만 허용
+                .anyRequest().authenticated();
 
-        http.exceptionHandling()
-                .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-        ;
-
-        return http.build();
+        http.exceptionHandling() //인증 실패 시 사용자 정의 인증 진입 지점(CustomAuthenticationEntryPoint)을 설정
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+        //CustomAuthenticationEntryPoint클래스 생성은 p.182
+        return http.build(); //SecurityFilterChain을 생성하고 반환
     }
 
     @Bean

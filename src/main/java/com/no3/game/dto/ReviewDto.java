@@ -15,11 +15,11 @@ public class ReviewDto {
     private String text;    // 리뷰 내용
     private int grade;      // 평점
 
-    private String itemTitle; // 아이템 이름
+    private String itemNm; // 아이템 이름
     private String writerEmail; // 작성자의 이메일
     private String writerName; // 작성자의 이름
 
-    private LocalDateTime regDate;
-    private LocalDateTime modDate;
+    private LocalDateTime regTime;    // 등록일
+    private LocalDateTime updateTime; // 수정일
 
 }

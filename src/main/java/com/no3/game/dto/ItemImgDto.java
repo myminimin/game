@@ -1,9 +1,11 @@
 package com.no3.game.dto;
 
+import com.no3.game.entity.ItemImg;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -14,27 +16,20 @@ import java.net.URLEncoder;
 @Builder
 public class ItemImgDto {
 
-    private String uuid;
+    private Long id;
 
     private String imgName;
 
-    private String path;
+    private String oriImgName;
 
-    public String getImageURL(){
-        try {
-            return URLEncoder.encode(path+"/"+uuid+"_"+imgName,"UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-    public String getThumbnailURL(){
-        try {
-            return URLEncoder.encode(path+"/s_"+uuid+"_"+imgName,"UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return "";
+    private String imgUrl;
+
+    private String repImgYn;
+
+    private static ModelMapper modelMapper = new ModelMapper();
+
+    public static ItemImgDto of(ItemImg itemImg) {
+        return modelMapper.map(itemImg, ItemImgDto.class);
     }
 
 }

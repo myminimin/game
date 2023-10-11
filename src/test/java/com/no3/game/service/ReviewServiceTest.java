@@ -24,9 +24,9 @@ class ReviewServiceTest {
         ReviewDto dto = ReviewDto.builder()
                 .text("재밌어요")
                 .grade((int)(Math.random()*5) + 1)
-                .itemTitle("eee")
-                .writerEmail("ogi@gmail.com")
-                .writerName("명오기")
+                .itemNm("테스트 상품")
+                .writerEmail("ogi@naver.com")
+                .writerName("오기")
                 .build();
 
         Long id = reviewService.register(dto);

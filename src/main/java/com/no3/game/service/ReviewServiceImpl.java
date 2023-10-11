@@ -14,7 +14,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 @Service
@@ -30,8 +32,8 @@ public class ReviewServiceImpl implements ReviewService{
     public Long register(ReviewDto dto) {
         log.info(dto);
 
-        Item item = itemRepository.findByTitle(dto.getItemTitle())
-                .orElseThrow(() -> new IllegalArgumentException("No item found with title: " + dto.getItemTitle()));
+        Item item = itemRepository.findByTitle(dto.getItemNm())
+                .orElseThrow(() -> new IllegalArgumentException("No item found with title: " + dto.getItemNm()));
 
         Member member = memberRepository.findByEmail(dto.getWriterEmail())
                 .orElseThrow(() -> new IllegalArgumentException("No member found with email: " + dto.getWriterEmail()));
@@ -66,5 +68,28 @@ public class ReviewServiceImpl implements ReviewService{
         return new PageResultDTO<>(result, fn);
     }
 
+    @Override
+    public ReviewDto get(Long id) {
+
+        Object result = repository.getReviewById(id);
+
+        Object[] arr = (Object[])result;
+
+        return entityToDTO((Review)arr[0], (Member)arr[1], (Item) arr[2]);
+
+    } // read 구현
+
+    @Transactional
+    @Override
+    public void modify(ReviewDto reviewDto) {
+
+        Optional<Review> result = repository.findById(reviewDto.getId());
+
+        Review review = result.get();
+        review.changeGrade(reviewDto.getGrade());
+        review.changeText(reviewDto.getText());
+        repository.save(review);
+
+    } // modify 구현
 
 }
