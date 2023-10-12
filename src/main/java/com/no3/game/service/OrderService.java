@@ -42,7 +42,7 @@ public class OrderService {
                 .orElseThrow(EntityNotFoundException::new); // 현재 로그인한 회원의 이메일 정보를 이용해서 회원 정보를 조회
 
         List<OrderItem> orderItemList = new ArrayList<>();
-        OrderItem orderItem = OrderItem.createOrderItem(item);
+        OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
         orderItemList.add(orderItem);
 
         Order order = Order.createOrder(member, orderItemList); // 회원 정보와 주문할 상품 리스트 정보를 이용하여 주문 엔티티를 생성
@@ -110,7 +110,7 @@ public class OrderService {
             Item item = itemRepository.findById(orderDto.getItemId())
                     .orElseThrow(EntityNotFoundException::new);
 
-            OrderItem orderItem = OrderItem.createOrderItem(item);
+            OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
             orderItemList.add(orderItem);
         }
 
