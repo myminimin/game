@@ -44,6 +44,8 @@ public class ItemFormDto {
                 .title(this.getItemNm())
                 .detail(this.getItemDetail()) // 여기에서 detail 필드에 값을 설정해야 합니다.
                 .price(this.getPrice())
+                .genre(this.getGenre())
+                .developer(this.getDeveloper())
                 .itemSellStatus(this.itemSellStatus)
                .build();
     }

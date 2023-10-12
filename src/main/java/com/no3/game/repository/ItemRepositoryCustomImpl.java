@@ -102,7 +102,9 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                                 item.title,
                                 item.detail,
                                 itemImg.imgUrl,
-                                item.price)
+                                item.price,
+                                item.genre,
+                                item.developer)
                 )
                 .from(itemImg)
                 .join(itemImg.item, item)
