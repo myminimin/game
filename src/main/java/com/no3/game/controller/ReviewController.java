@@ -21,6 +21,22 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
+    @GetMapping("/register")
+    public void register(){
+
+    }
+
+    @PostMapping("/register")
+    public String register(ReviewDto reviewDto, RedirectAttributes redirectAttributes){
+        log.info("reviewDto: " + reviewDto);
+
+        Long id = reviewService.register(reviewDto);
+
+        redirectAttributes.addFlashAttribute("msg", id);
+
+        return "redirect:/review/list";
+    }
+
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, Model model){
         log.info("Review list..." + pageRequestDTO);

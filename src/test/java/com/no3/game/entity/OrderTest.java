@@ -113,11 +113,11 @@ public class OrderTest {
 
     @Test
     @DisplayName("고아객체 제거 테스트")
-    public void orphanRemovalTest() {
-        Order order = this.createOrder();
-        order.getOrderItems().remove(0);
+        public void orphanRemovalTest() {
+            Order order = this.createOrder();
+            order.getOrderItems().remove(0);
 
-        em.flush();
+            em.flush();
     }
 
     @Test

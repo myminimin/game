@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<div layout:fragment="content">
+
+  <h1 class="mt-4">Review Register Test Page</h1>
+
+  <form th:action="@{/review/register}" th:method="post">
+    <div class="form-group">
+      <label >title</label>
+      <input type="text" class="form-control" name="itemNm" placeholder="Enter Title">
+    </div>
+    <div class="form-group">
+      <label >text</label>
+      <textarea class="form-control" rows="5" name="text"></textarea>
+    </div>
+    <div class="form-group">
+      <label >Writer Email</label>
+      <input type="email" class="form-control" name="writerEmail" placeholder="Writer Email ">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+
+</div>
+
+</html>

@@ -55,7 +55,7 @@
             <tr th:each="item, status: ${items.getContent()}">
                 <td th:text="${item.id}"></td>
                 <td>
-                    <a th:href="'/admin/item/'+${item.id}" th:text="${item.itemNm}"></a>
+                    <a th:href="'/admin/item/'+${item.id}" th:text="${item.title}"></a>
                 </td>
                 <td th:text="${item.itemSellStatus == T(com.no3.game.constant.ItemSellStatus).SELL} ? '판매중' : '품절'"></td>
                 <td th:text="${item.createdBy}"></td>
