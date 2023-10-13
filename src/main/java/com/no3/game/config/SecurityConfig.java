@@ -36,8 +36,9 @@ public class SecurityConfig {
                 .mvcMatchers("/css/**","/js/**","/img/**", "/fonts/**").permitAll()
                 .mvcMatchers("/", "/members/**", "/item/**","/images/**").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
-                //'/admin/**' 패턴은 "ADMIN" 역할을 가진 사용자에게만 허용
+                // '/admin/**' 패턴은 "ADMIN" 역할을 가진 사용자에게만 허용
                 .mvcMatchers("/review/list", "/review/read/**").permitAll()
+                // '/review/list", "/review/read/**" 패턴은 누구나 볼 수 있게 허용
                 .anyRequest().authenticated();
 
         http.exceptionHandling() //인증 실패 시 사용자 정의 인증 진입 지점(CustomAuthenticationEntryPoint)을 설정

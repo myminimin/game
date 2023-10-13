@@ -50,8 +50,19 @@ public class ItemFormDto {
                .build();
     }
 
-    public static ItemFormDto of(Item item){
+    /* public static ItemFormDto of(Item item){
         return modelMapper.map(item, ItemFormDto.class);
-    }
+    } modelMapper 이용 */
+
+    public static ItemFormDto of(Item item) {
+        ItemFormDto dto = new ItemFormDto();
+        dto.setItemNm(item.getTitle());
+        dto.setItemDetail(item.getDetail());
+        dto.setPrice(item.getPrice());
+        dto.setGenre(item.getGenre());
+        dto.setDeveloper(item.getDeveloper());
+        dto.setItemSellStatus(item.getItemSellStatus());
+        return dto;
+    } // 직접 매핑
 
 }

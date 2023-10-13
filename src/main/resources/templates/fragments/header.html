@@ -26,16 +26,18 @@
                         <nav class="header__menu mobile-menu">
                             <ul>
                                 <li class="active"><a href="/">Homepage</a></li>
+                                <!-- EVERYONE(GUEST, USER, ADMIN) -->
                                 <li>
                                     <a class="nav-link" href="/review/list">커뮤니티</a>
                                 </li>
-                                <!-- 로그인한 사용자만 보이고, admin에게는 보이지 않는 항목들 -->
+                                <!-- ONLY USER  -->
                                 <li sec:authorize="isAuthenticated() and !hasAuthority('ROLE_ADMIN')">
                                     <a class="nav-link" href="/cart">장바구니</a>
                                 </li>
                                 <li sec:authorize="isAuthenticated() and !hasAuthority('ROLE_ADMIN')">
                                     <a class="nav-link" href="/orders">구매이력</a>
                                 </li>
+                                <!-- ONLY ADMIN -->
                                 <li sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
                                     <a href="#">관리자 페이지 <span class="arrow_carrot-down"></span></a>
                                     <ul class="dropdown">
@@ -53,10 +55,12 @@
                     <div class="header__right">
                         <a href="#" class="search-switch"><span class="icon_search"></span></a>
                         <!-- 로그인 되지 않았을 때만 로그인 아이콘 표시 -->
-                        <a class="nav-link" th:href="@{/members/login}" sec:authorize="!isAuthenticated()"><span class="icon_profile"></span></a>
-
+                        <a class="nav-link" th:href="@{/members/login}"
+                           sec:authorize="!isAuthenticated()">
+                            <span class="icon_profile"></span></a>
                         <!-- 로그인 되었을 때만 로그아웃 링크 표시 -->
-                        <a class="nav-link" th:href="@{/members/logout}" sec:authorize="isAuthenticated()">Logout</a>
+                        <a class="nav-link" th:href="@{/members/logout}"
+                           sec:authorize="isAuthenticated()">Logout</a>
                     </div>
                 </div>
             </div>

@@ -37,7 +37,7 @@
                       <li>[[${item.genre}]]</li>
                       <li>[[${item.developer}]]</li>
                     </ul>
-                    <h5><a href="#">[[${item.itemNm}]]</a></h5>
+                    <h5><a th:href="@{/item/{itemId}(itemId=${item.id})}">[[${item.itemNm}]]</a></h5>
                     <h8 class="card-title text-danger">[[${item.price}]]원</h8>
                   </div>
                 </div>
