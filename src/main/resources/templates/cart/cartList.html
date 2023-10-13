@@ -6,10 +6,6 @@
 <head>
   <meta name="_csrf" th:content="${_csrf.token}"/>
   <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-</head>
-
-<!-- 사용자 스크립트 추가 -->
-<th:block layout:fragment="script">
 
   <script th:inline="javascript">
 
@@ -161,37 +157,10 @@
     }
 
   </script>
+</head>
 
-</th:block>
 
-<!-- 사용자 CSS 추가 -->
-<th:block layout:fragment="css">
-  <style>
-    .content-mg{
-      margin-left:25%;
-      margin-right:25%;
-      margin-top:2%;
-      margin-bottom:100px;
-    }
-    .repImgDiv{
-      margin-right:15px;
-      margin-left:15px;
-      height:auto;
-    }
-    .repImg{
-      height:100px;
-      width:100px;
-    }
-    .fs18{
-      font-size:18px
-    }
-    .fs24{
-      font-size:24px
-    }
-  </style>
-</th:block>
-
-<div layout:fragment="content" class="content-mg">
+<div layout:fragment="content">
 
   <h2 class="mb-4">
     장바구니 목록
@@ -200,11 +169,6 @@
   <div>
 
     <table class="table">
-      <colgroup>
-        <col width="15%"/>
-        <col width="70%"/>
-        <col width="15%"/>
-      </colgroup>
       <thead>
       <tr class="text-center">
         <td>

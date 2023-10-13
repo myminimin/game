@@ -4,6 +4,7 @@ import com.no3.game.dto.CartDetailDto;
 import com.no3.game.dto.CartItemDto;
 import com.no3.game.dto.CartOrderDto;
 import com.no3.game.service.CartService;
+import com.no3.game.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +55,7 @@ public class CartController {
         List<CartDetailDto> cartDetailList = cartService.getCartList(principal.getName());
         model.addAttribute("cartItems", cartDetailList);
         return "cart/cartList";
-    }
+    } // Principal 객체를 통해서 현재 로그인한 사용자의 이름을 가져와 장바구니 목록을 가져옴
 
     @PatchMapping(value = "/cartItem/{cartItemId}")
     public @ResponseBody ResponseEntity updateCartItem(@PathVariable("cartItemId") Long cartItemId, Principal principal){
