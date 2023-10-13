@@ -1,6 +1,8 @@
 package com.no3.game.config;
 
+import com.no3.game.oauth.PrincipalOauth2UserService;
 import com.no3.game.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,10 +15,15 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     @Autowired
     MemberService memberService;
+
+    @Autowired
+    private PrincipalOauth2UserService principalOauth2UserService;
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -31,6 +38,7 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/")          // 로그아웃 성공 시 이동할 URL 설정
         ;
 
+        http.csrf().disable();
 
         http.authorizeRequests()//메소드는 URL 패턴에 따른 접근 권한을 설정
                 .mvcMatchers("/css/**","/js/**","/img/**", "/fonts/**").permitAll()
@@ -44,6 +52,12 @@ public class SecurityConfig {
         http.exceptionHandling() //인증 실패 시 사용자 정의 인증 진입 지점(CustomAuthenticationEntryPoint)을 설정
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
 
+        http.oauth2Login()
+                .loginPage("/loginForm")
+                .userInfoEndpoint()
+                .userService(principalOauth2UserService)
+        ;
+
         return http.build(); //SecurityFilterChain을 생성하고 반환
     }
 
@@ -51,5 +65,7 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     } // 해시 함수를 이용해 비밀번호를 암호화하여 저장
+
+
 
 }

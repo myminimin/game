@@ -36,6 +36,9 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private String provider;
+    private String providerId;
+
     public static Member createMember(MemberJoinDto memberJoinDto, PasswordEncoder passwordEncoder){
 
         Member member = Member.builder()

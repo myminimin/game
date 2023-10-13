@@ -23,7 +23,7 @@
               </div>
               <p th:if="${loginErrorMsg}" class="error" th:text="${loginErrorMsg}"></p>
               <button type="submit" class="site-btn">Login Now</button>
-              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+              <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}">
             </form>
             <a href="#" class="forget_pass">Forgot Your Password?</a>
           </div>
@@ -41,10 +41,10 @@
             <div class="login__social__links">
               <span>or</span>
               <ul>
-                <li><a href="#" class="facebook"><i class="fa fa-facebook"></i> Sign in With
-                  Facebook</a></li>
-                <li><a href="#" class="google"><i class="fa fa-google"></i> Sign in With Google</a></li>
-                <li><a href="#" class="twitter"><i class="fa fa-twitter"></i> Sign in With Twitter</a>
+                <li><a href="/oauth2/authorization/kakao" class="kakao"><i class="fa fa-kakao"></i> Sign in With
+                  Kakao</a></li>
+                <li><a href="/oauth2/authorization/google" class="google"><i class="fa fa-google"></i> Sign in With Google</a></li>
+                <li><a href="/oauth2/authorization/naver" class="naver"><i class="fa fa-naver"></i> Sign in With Naver</a>
                 </li>
               </ul>
             </div>
