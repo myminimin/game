@@ -83,7 +83,6 @@ public class CartService {
             return memberRepository.findByEmail(email).orElse(null);
             // 해당 이메일로 'Member' 객체를 데이터베이스에서 찾아 반환합니다.
 
-
         } else {
             throw new IllegalArgumentException("Unsupported principal type");
             // 어떤 타입에도 속하지 않을 때 예외 발생(예상치 못한 타입의 'Principal' 객체가 주어졌을 때 문제 발견을 위한 목적)

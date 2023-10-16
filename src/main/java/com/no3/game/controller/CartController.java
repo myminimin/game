@@ -43,7 +43,7 @@ public class CartController {
 
         try {
             Member member = cartService.getMemberFromPrincipal(principal);
-            Long cartItemId = cartService.addCart(cartItemDto, member);  // Member 객체를 직접 전달합니다.
+            Long cartItemId = cartService.addCart(cartItemDto, member);
             return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
         } catch(EntityNotFoundException ex) {
             return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
@@ -86,6 +86,10 @@ public class CartController {
     @PostMapping(value = "/cart/orders")
     public @ResponseBody ResponseEntity orderCartItem(@RequestBody CartOrderDto cartOrderDto, Principal principal){
 
+        Member member = cartService.getMemberFromPrincipal(principal);
+        if (member == null) {
+            return new ResponseEntity<String>("로그인 정보가 유효하지 않습니다.", HttpStatus.UNAUTHORIZED);
+        }
         List<CartOrderDto> cartOrderDtoList = cartOrderDto.getCartOrderDtoList();
 
         if(cartOrderDtoList == null || cartOrderDtoList.size() == 0){
@@ -93,13 +97,15 @@ public class CartController {
         }
 
         for (CartOrderDto cartOrder : cartOrderDtoList) {
-            if(!cartService.validateCartItem(cartOrder.getCartItemId(), principal.getName())){
+            if(!cartService.validateCartItem(cartOrder.getCartItemId(), member.getEmail())){
                 return new ResponseEntity<String>("주문 권한이 없습니다.", HttpStatus.FORBIDDEN);
             }
         }
 
-        Long orderId = cartService.orderCartItem(cartOrderDtoList, principal.getName());
+        Long orderId = cartService.orderCartItem(cartOrderDtoList, member.getEmail());
         return new ResponseEntity<Long>(orderId, HttpStatus.OK);
+
     }
+
 
 }
