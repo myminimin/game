@@ -2,8 +2,11 @@ package com.no3.game.controller;
 
 import com.no3.game.dto.OrderDto;
 import com.no3.game.dto.OrderHistDto;
+import com.no3.game.entity.Member;
+import com.no3.game.service.MemberService;
 import com.no3.game.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.internal.util.Members;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
@@ -25,6 +29,7 @@ import java.util.Optional;
 public class OrderController {
 
     private final OrderService orderService;
+    private final MemberService memberService;
 
     @PostMapping(value = "/order")
     public @ResponseBody ResponseEntity order(@RequestBody @Valid OrderDto orderDto
@@ -41,23 +46,24 @@ public class OrderController {
             return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST); // 에러 정보를 ResponseEntity 객체에 담아서 반환
         }
 
-        String email = principal.getName(); // principal 객체에서 현재 로그인한 회원의 이메일 정보를 조회
-        Long orderId;
+        Member member = memberService.getMemberFromPrincipal(principal);
 
         try {
-            orderId = orderService.order(orderDto, email); // 화면으로부터 넘어오는 주문 정보와 회원의 이메일 정보를 이용하여 주문 로직을 호출
-        } catch(Exception e){
+            Long orderId = orderService.order(orderDto, member.getEmail());
+            return new ResponseEntity<Long>(orderId, HttpStatus.OK);
+        } catch(EntityNotFoundException ex) {
+            return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch(Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
-        return new ResponseEntity<Long>(orderId, HttpStatus.OK);
     }
 
     @GetMapping(value = {"/orders", "/orders/{page}"})
     public String orderHist(@PathVariable("page") Optional<Integer> page, Principal principal, Model model){
+        Member member = memberService.getMemberFromPrincipal(principal);
 
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 4);
-        Page<OrderHistDto> ordersHistDtoList = orderService.getOrderList(principal.getName(), pageable);
+        Page<OrderHistDto> ordersHistDtoList = orderService.getOrderList(member.getEmail(), pageable);
 
         model.addAttribute("orders", ordersHistDtoList);
         model.addAttribute("page", pageable.getPageNumber());
@@ -68,8 +74,9 @@ public class OrderController {
 
     @PostMapping("/order/{orderId}/cancel")
     public @ResponseBody ResponseEntity cancelOrder(@PathVariable("orderId") Long orderId , Principal principal){
+        Member member = memberService.getMemberFromPrincipal(principal);
 
-        if(!orderService.validateOrder(orderId, principal.getName())){
+        if(!orderService.validateOrder(orderId, member.getEmail())){
             return new ResponseEntity<String>("주문 취소 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
 

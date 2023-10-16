@@ -7,6 +7,7 @@ import com.no3.game.entity.Member;
 import com.no3.game.repository.MemberRepository;
 import com.no3.game.service.CartService;
 import com.no3.game.service.ItemService;
+import com.no3.game.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ import java.util.List;
 public class CartController {
 
     private final CartService cartService;
+    private final MemberService memberService;
 
     @PostMapping(value = "/cart")
     public @ResponseBody ResponseEntity order(@RequestBody @Valid CartItemDto cartItemDto, BindingResult bindingResult, Principal principal){
@@ -42,7 +44,7 @@ public class CartController {
         }
 
         try {
-            Member member = cartService.getMemberFromPrincipal(principal);
+            Member member = memberService.getMemberFromPrincipal(principal);
             Long cartItemId = cartService.addCart(cartItemDto, member);
             return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
         } catch(EntityNotFoundException ex) {
@@ -54,7 +56,7 @@ public class CartController {
 
     @GetMapping(value = "/cart")
     public String orderHist(Principal principal, Model model){
-        Member member = cartService.getMemberFromPrincipal(principal); // 현재 사용자의 Member 엔티티를 가져와
+        Member member = memberService.getMemberFromPrincipal(principal); // 현재 사용자의 Member 엔티티를 가져와
         List<CartDetailDto> cartDetailList = cartService.getCartList(member.getEmail()); // 이 멤버의 Email을 전달
         model.addAttribute("cartItems", cartDetailList);
         return "cart/cartList";
@@ -86,7 +88,7 @@ public class CartController {
     @PostMapping(value = "/cart/orders")
     public @ResponseBody ResponseEntity orderCartItem(@RequestBody CartOrderDto cartOrderDto, Principal principal){
 
-        Member member = cartService.getMemberFromPrincipal(principal);
+        Member member = memberService.getMemberFromPrincipal(principal);
         if (member == null) {
             return new ResponseEntity<String>("로그인 정보가 유효하지 않습니다.", HttpStatus.UNAUTHORIZED);
         }
