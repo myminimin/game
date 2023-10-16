@@ -16,15 +16,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService{
 
-    private final ReviewRepository repository;
+    private final ReviewRepository reviewRepository;
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
 
@@ -46,7 +48,7 @@ public class ReviewServiceImpl implements ReviewService{
                 .member(member)
                 .build();
 
-        repository.save(review);
+        reviewRepository.save(review);
         return review.getId();
     } // 리뷰 작성
 
@@ -59,7 +61,7 @@ public class ReviewServiceImpl implements ReviewService{
 
        /* Page<Object[]> result = repository.getReviewWithAll(
                 pageRequestDTO.getPageable(Sort.by("id").descending())  );*/
-        Page<Object[]> result = repository.searchPage(
+        Page<Object[]> result = reviewRepository.searchPage(
                 pageRequestDTO.getType(),
                 pageRequestDTO.getKeyword(),
                 pageRequestDTO.getPageable(Sort.by("id").descending())  );
@@ -71,7 +73,7 @@ public class ReviewServiceImpl implements ReviewService{
     @Override
     public ReviewDto get(Long id) {
 
-        Object result = repository.getReviewById(id);
+        Object result = reviewRepository.getReviewById(id);
 
         Object[] arr = (Object[])result;
 
@@ -83,13 +85,22 @@ public class ReviewServiceImpl implements ReviewService{
     @Override
     public void modify(ReviewDto reviewDto) {
 
-        Optional<Review> result = repository.findById(reviewDto.getId());
+        Optional<Review> result = reviewRepository.findById(reviewDto.getId());
 
         Review review = result.get();
         review.changeGrade(reviewDto.getGrade());
         review.changeText(reviewDto.getText());
-        repository.save(review);
+        reviewRepository.save(review);
 
     } // modify 구현
 
+    @Override
+    public List<ReviewDto> getReviewsByItemId(Long itemId) {
+        Item item = itemRepository.findById(itemId).orElseThrow(() -> new IllegalArgumentException("Invalid itemId"));
+        List<Review> reviews = reviewRepository.findByItem(item);
+
+        return reviews.stream()
+                .map(review -> entityToDTO(review, review.getMember(), review.getItem()))
+                .collect(Collectors.toList());
+    } // itemId에 해당하는 review 객체를 가지고 옴
 }

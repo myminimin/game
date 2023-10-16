@@ -7,6 +7,8 @@ import com.no3.game.entity.Item;
 import com.no3.game.entity.Member;
 import com.no3.game.entity.Review;
 
+import java.util.List;
+
 public interface ReviewService {
 
     Long register(ReviewDto dto); // 리뷰 작성
@@ -15,6 +17,8 @@ public interface ReviewService {
 
     ReviewDto get(Long id);
     void modify(ReviewDto reviewDto);
+
+    List<ReviewDto> getReviewsByItemId(Long itemId); // itemId에 해당하는 review를 가지고 옴
 
     default Review dtoToEntity(ReviewDto dto) {
 

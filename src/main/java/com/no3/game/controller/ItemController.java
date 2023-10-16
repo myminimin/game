@@ -2,8 +2,10 @@ package com.no3.game.controller;
 
 import com.no3.game.dto.ItemFormDto;
 import com.no3.game.dto.ItemSearchDto;
+import com.no3.game.dto.ReviewDto;
 import com.no3.game.entity.Item;
 import com.no3.game.service.ItemService;
+import com.no3.game.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +29,7 @@ import java.util.Optional;
 public class ItemController {
 
     private final ItemService itemService;
+    private final ReviewService reviewService;
 
     @GetMapping(value = "/admin/item/new")
     public String itemForm(Model model) {
@@ -99,7 +102,7 @@ public class ItemController {
     @GetMapping(value = {"/admin/items", "/admin/items/{page}"})
     public String itemManage(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, Model model){
 
-        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
         Page<Item> items = itemService.getAdminItemPage(itemSearchDto, pageable);
 
         model.addAttribute("items", items);
@@ -112,7 +115,11 @@ public class ItemController {
     @GetMapping(value = "/item/{itemId}")
     public String itemDtl(Model model, @PathVariable("itemId") Long itemId){
         ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
+        List<ReviewDto> reviews = reviewService.getReviewsByItemId(itemId);
+
         model.addAttribute("item", itemFormDto);
+        model.addAttribute("reviews", reviews);
+
         return "item/itemDtl";
     }
 

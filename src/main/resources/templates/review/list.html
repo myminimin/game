@@ -5,14 +5,12 @@
 
 <div layout:fragment="content">
 
-    <h1 class="mt-4">Review List Test Page
-        <span>
-                <a th:href="@{/review/register}">
-                    <button type="button" class="btn btn-outline-primary">REGISTER
+        <div class="anime__details__btn">
+                <a th:href="@{/review/register}" >
+                    <button type="button" class="follow-btn">REGISTER
                     </button>
                 </a>
-            </span>
-    </h1>
+        </div>
 
     <form action="/review/list" method="get" id="searchForm">
         <div class="input-group">

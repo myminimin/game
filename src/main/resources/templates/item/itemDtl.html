@@ -90,9 +90,20 @@
                 }
             });
         }
+
+        $(document).ready(function() {
+            $('.review-time').each(function() {
+                var time = $(this).text();
+                var fromNow = moment(time).fromNow();
+                $(this).text(fromNow);
+            });
+        });
+
         $(document).ready(function(){
 
         });
+
+
 
 
     </script>
@@ -137,6 +148,39 @@
                                 <button class="follow-btn" type="button" onclick="order()">
                                     <i class="fa fa-heart"></i> ORDER</button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-md-8">
+                    <div class="anime__details__review">
+                        <div class="section-title">
+                            <h5>Reviews</h5>
+                        </div>
+                        <th:block th:each="review : ${reviews}">
+                            <div class="anime__review__item">
+                                <div class="anime__review__item__pic">
+                                    <!-- 아래 이미지 경로는 리뷰 작성자의 프로필 이미지나 기본 이미지로 변경할 수 있습니다. -->
+                                    <img src="#" alt="">
+                                </div>
+                                <div class="anime__review__item__text">
+                                    <h6>
+                                        <span th:text="${review.writerName}"></span>
+                                        <span class="review-time" th:text="${review.regTime}"></span>
+                                    </h6>
+                                    <p th:text="${review.text}"></p>
+                                </div>
+                            </div>
+                        </th:block>
+                        <div class="anime__details__form">
+                            <div class="section-title">
+                                <h5>Your Comment</h5>
+                            </div>
+                            <form action="#">
+                                <textarea placeholder="Your Comment"></textarea>
+                                <button type="submit"><i class="fa fa-location-arrow"></i> Review</button>
+                            </form>
                         </div>
                     </div>
                 </div>
