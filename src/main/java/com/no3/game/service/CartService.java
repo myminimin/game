@@ -13,11 +13,14 @@ import com.no3.game.repository.CartRepository;
 import com.no3.game.repository.ItemRepository;
 import com.no3.game.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,13 +36,11 @@ public class CartService {
     private final CartItemRepository cartItemRepository;
     private final OrderService orderService;
 
-    public Long addCart(CartItemDto cartItemDto, String email){
+
+    public Long addCart(CartItemDto cartItemDto, Member member){
 
         Item item = itemRepository.findById(cartItemDto.getItemId())
                 .orElseThrow(() -> new EntityNotFoundException("Item not found with ID: " + cartItemDto.getItemId()));
-        Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("Member not found with Email: " + email));
-        // Item, Member 객체가 존재하지 않을 경우 EntityNotFoundException을 명확하게 발생시킬 수 있다.
 
         Cart cart = cartRepository.findByMemberId(member.getId());
         if(cart == null){
@@ -57,6 +58,17 @@ public class CartService {
             return cartItem.getId();
         }
     }
+
+    public Member getMemberFromPrincipal(Principal principal) {
+        if (principal instanceof OAuth2AuthenticationToken) {
+            OAuth2User oauth2User = ((OAuth2AuthenticationToken) principal).getPrincipal();
+            String email = oauth2User.getAttribute("email");
+            return memberRepository.findByEmail(email)
+                    .orElseThrow(() -> new EntityNotFoundException("Member not found with Email: " + email));
+        }
+        // 다른 인증 방식에 대한 처리 로직 (만약 필요하다면)
+        return null;
+    } // 현재 로그인한 유저의 email(유니크 속성) 정보를 가지고 옴
 
     @Transactional(readOnly = true)
     public List<CartDetailDto> getCartList(String email){

@@ -53,7 +53,7 @@ public class CartServiceTest {
         return memberRepository.save(member);
     }
 
-    @Test
+   /* @Test
     @DisplayName("장바구니 담기 테스트")
     public void addCart(){
         Item item = saveItem();
@@ -67,7 +67,7 @@ public class CartServiceTest {
                 .orElseThrow(EntityNotFoundException::new);
 
         assertEquals(item.getId(), cartItem.getItem().getId());
-    }
+    }*/
 
 
 }

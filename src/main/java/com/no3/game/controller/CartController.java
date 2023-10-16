@@ -3,6 +3,8 @@ package com.no3.game.controller;
 import com.no3.game.dto.CartDetailDto;
 import com.no3.game.dto.CartItemDto;
 import com.no3.game.dto.CartOrderDto;
+import com.no3.game.entity.Member;
+import com.no3.game.repository.MemberRepository;
 import com.no3.game.service.CartService;
 import com.no3.game.service.ItemService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
@@ -23,6 +26,7 @@ import java.util.List;
 public class CartController {
 
     private final CartService cartService;
+    private final MemberRepository memberRepository;
 
     @PostMapping(value = "/cart")
     public @ResponseBody ResponseEntity order(@RequestBody @Valid CartItemDto cartItemDto, BindingResult bindingResult, Principal principal){
@@ -38,24 +42,25 @@ public class CartController {
             return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
         }
 
-        String email = principal.getName();
-        Long cartItemId;
-
         try {
-            cartItemId = cartService.addCart(cartItemDto, email);
-        } catch(Exception e){
+            Member member = cartService.getMemberFromPrincipal(principal);
+            Long cartItemId = cartService.addCart(cartItemDto, member);  // Member 객체를 직접 전달합니다.
+            return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
+        } catch(EntityNotFoundException ex) {
+            return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch(Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
-        return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
     }
 
     @GetMapping(value = "/cart")
     public String orderHist(Principal principal, Model model){
-        List<CartDetailDto> cartDetailList = cartService.getCartList(principal.getName());
+        Member member = cartService.getMemberFromPrincipal(principal); // 현재 사용자의 Member 엔티티를 가져와
+        List<CartDetailDto> cartDetailList = cartService.getCartList(member.getEmail()); // 이 멤버의 Email을 전달
         model.addAttribute("cartItems", cartDetailList);
         return "cart/cartList";
-    } // Principal 객체를 통해서 현재 로그인한 사용자의 이름을 가져와 장바구니 목록을 가져옴
+    }
+
 
     @PatchMapping(value = "/cartItem/{cartItemId}")
     public @ResponseBody ResponseEntity updateCartItem(@PathVariable("cartItemId") Long cartItemId, Principal principal){
