@@ -184,12 +184,12 @@
           <input type="checkbox" name="cartChkBox" th:value="${cartItem.cartItemId}">
         </td>
         <td class="d-flex">
-          <div class="repImgDiv align-self-center">
+          <div class="header__logo">
             <img th:src="${cartItem.imgUrl}" class = "rounded repImg" th:alt="${cartItem.itemNm}">
           </div>
-          <div class="align-self-center">
+          <div class="anime__details__title">
             <span th:text="${cartItem.itemNm}" class="fs24 font-weight-bold"></span>
-            <div class="fs18 font-weight-light">
+            <div class="col-lg-6 col-md-6">
                             <span class="input-group mt-2">
                                 <span th:id="'price_' + ${cartItem.cartItemId}"
                                       th:data-price="${cartItem.price}"
@@ -215,8 +215,8 @@
       총 주문 금액 : <span id="orderTotalPrice" class="text-danger">0원</span>
     </h2>
 
-    <div class="text-center mt-3">
-      <button type="button" class="btn btn-primary btn-lg" onclick="orders()">주문하기</button>
+    <div class="anime__details__btn">
+      <button type="button" class="follow-btn" onclick="orders()">주문하기</button>
     </div>
 
   </div>

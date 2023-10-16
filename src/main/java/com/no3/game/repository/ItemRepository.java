@@ -14,6 +14,7 @@ import java.util.Optional;
 
 public interface ItemRepository extends JpaRepository<Item, Long>, QuerydslPredicateExecutor<Item>, ItemRepositoryCustom {
 
+
     Optional<Item> findByTitle(@Param("title") String itemNm); // Review에서 사용
 
     // List<Item> findByTitle(String itemNm); 
