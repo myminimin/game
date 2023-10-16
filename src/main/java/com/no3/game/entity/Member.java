@@ -26,9 +26,6 @@ public class Member extends BaseEntity {
     private String email;
     private String password;
 
-    /* 카카오 회원가입 */
-    // private boolean social;
-
     public void changePassword(String password){
         this.password = password;
     }

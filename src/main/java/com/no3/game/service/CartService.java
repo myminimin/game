@@ -13,6 +13,9 @@ import com.no3.game.repository.CartRepository;
 import com.no3.game.repository.ItemRepository;
 import com.no3.game.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -60,15 +63,33 @@ public class CartService {
     }
 
     public Member getMemberFromPrincipal(Principal principal) {
-        if (principal instanceof OAuth2AuthenticationToken) {
+        if (principal instanceof UserDetails) {
+            // 특정 객체가 해당 클래스의 인스턴스인지를 확인
+            String username = ((UserDetails) principal).getUsername();
+            return memberRepository.findByEmail(username).orElse(null);
+
+        }else if (principal instanceof OAuth2AuthenticationToken) {
+            // 소셜 로그인 시 = OAuth2 인증을 위한 토큰을 나타내는 클래스
             OAuth2User oauth2User = ((OAuth2AuthenticationToken) principal).getPrincipal();
+            // 실제 사용자 정보를 포함하는 'OAuth2User' 객체를 가져옴
             String email = oauth2User.getAttribute("email");
-            return memberRepository.findByEmail(email)
-                    .orElseThrow(() -> new EntityNotFoundException("Member not found with Email: " + email));
+            // 이메일 주소를 가져옴
+            return memberRepository.findByEmail(email).orElse(null);
+            // 해당 이메일로 'Member' 객체를 데이터베이스에서 찾아 반환
+
+        } else if (principal instanceof UsernamePasswordAuthenticationToken) {
+            // 일반 로그인 시 = 스프링 시큐리티에서 사용자 이름과 비밀번호를 기반으로 한 인증한 경우
+            String email = ((UsernamePasswordAuthenticationToken) principal).getName();
+            // 여기에서 name은 실제 이름이 아니라 사용자를 식별하는 값
+            return memberRepository.findByEmail(email).orElse(null);
+            // 그 값을 이용해 'Member' 객체를 데이터베이스에서 찾아 반환
+        } else {
+            throw new IllegalArgumentException("Unsupported principal type");
+            // 어떤 타입에도 속하지 않을 때 예외 발생(예상치 못한 타입의 'Principal' 객체가 주어졌을 때 문제 발견을 위한 목적)
         }
-        // 다른 인증 방식에 대한 처리 로직 (만약 필요하다면)
-        return null;
-    } // 현재 로그인한 유저의 email(유니크 속성) 정보를 가지고 옴
+    }
+
+
 
     @Transactional(readOnly = true)
     public List<CartDetailDto> getCartList(String email){
