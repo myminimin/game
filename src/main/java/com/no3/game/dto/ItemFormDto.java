@@ -56,6 +56,7 @@ public class ItemFormDto {
 
     public static ItemFormDto of(Item item) {
         ItemFormDto dto = new ItemFormDto();
+        dto.setId(item.getId()); // 변경한 내용
         dto.setItemNm(item.getTitle());
         dto.setItemDetail(item.getDetail());
         dto.setPrice(item.getPrice());

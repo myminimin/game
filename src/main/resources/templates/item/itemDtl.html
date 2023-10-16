@@ -10,13 +10,12 @@
     <script th:inline="javascript">
 
         function order(){
-            var itemId = $("#itemId").val();
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
 
             var url = "/order";
             var paramData = {
-                itemId : itemId,
+                itemId : $("#itemId").val(),
                 count : 1
             };
 
@@ -51,13 +50,12 @@
         }
 
         function addCart(){
-            var itemId = $("#itemId").val();
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
 
             var url = "/cart";
             var paramData = {
-                itemId : itemId,
+                itemId : $("#itemId").val(),
                 count : 1
             };
             console.log(paramData);

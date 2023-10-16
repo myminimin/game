@@ -26,7 +26,6 @@ import java.util.List;
 public class CartController {
 
     private final CartService cartService;
-    private final MemberRepository memberRepository;
 
     @PostMapping(value = "/cart")
     public @ResponseBody ResponseEntity order(@RequestBody @Valid CartItemDto cartItemDto, BindingResult bindingResult, Principal principal){

@@ -38,8 +38,6 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/")          // 로그아웃 성공 시 이동할 URL 설정
         ;
 
-        http.csrf().disable();
-
         http.authorizeRequests()//메소드는 URL 패턴에 따른 접근 권한을 설정
                 .mvcMatchers("/css/**","/js/**","/img/**", "/fonts/**").permitAll()
                 .mvcMatchers("/", "/members/**", "/item/**","/images/**").permitAll()
@@ -57,6 +55,11 @@ public class SecurityConfig {
                 .userInfoEndpoint()
                 .userService(principalOauth2UserService)
         ;
+
+        http.csrf()
+                .ignoringAntMatchers("/oauth2/**");
+        // Oauth2 인증과 관련된 경로에서는 CSRF 토큰의 확인이 생략 (테스트용)
+        // CSRF 공격 가능성, 의도하지 않은 접근과 같은 보안상 문제 발생할 수 있음
 
         return http.build(); //SecurityFilterChain을 생성하고 반환
     }
