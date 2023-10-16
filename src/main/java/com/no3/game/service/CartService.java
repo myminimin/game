@@ -63,26 +63,27 @@ public class CartService {
     }
 
     public Member getMemberFromPrincipal(Principal principal) {
-        if (principal instanceof UserDetails) {
-            // 특정 객체가 해당 클래스의 인스턴스인지를 확인
-            String username = ((UserDetails) principal).getUsername();
-            return memberRepository.findByEmail(username).orElse(null);
 
-        }else if (principal instanceof OAuth2AuthenticationToken) {
-            // 소셜 로그인 시 = OAuth2 인증을 위한 토큰을 나타내는 클래스
-            OAuth2User oauth2User = ((OAuth2AuthenticationToken) principal).getPrincipal();
-            // 실제 사용자 정보를 포함하는 'OAuth2User' 객체를 가져옴
-            String email = oauth2User.getAttribute("email");
-            // 이메일 주소를 가져옴
-            return memberRepository.findByEmail(email).orElse(null);
-            // 해당 이메일로 'Member' 객체를 데이터베이스에서 찾아 반환
-
-        } else if (principal instanceof UsernamePasswordAuthenticationToken) {
-            // 일반 로그인 시 = 스프링 시큐리티에서 사용자 이름과 비밀번호를 기반으로 한 인증한 경우
+        if (principal instanceof UsernamePasswordAuthenticationToken) {
+            // 일반 로그인 시 -
+            // - 사용자가 이름과 비밀번호로 로그인을 시도할 때 생성되는 토큰입니다.
+            // - 인증이 성공하면, 이 토큰은 인증된 사용자의 정보를 포함하게 됩니다.
+            // - 여기에서 getName()은 인증된 주체의 식별자(대부분 이메일 또는 ID)를 반환합니다.
             String email = ((UsernamePasswordAuthenticationToken) principal).getName();
-            // 여기에서 name은 실제 이름이 아니라 사용자를 식별하는 값
             return memberRepository.findByEmail(email).orElse(null);
-            // 그 값을 이용해 'Member' 객체를 데이터베이스에서 찾아 반환
+
+        } else if (principal instanceof OAuth2AuthenticationToken) {
+            // 소셜 로그인 시 -
+            // - 소셜 로그인 서비스를 통해 사용자가 인증될 때 생성되는 토큰입니다.
+            // - 이 토큰은 인증된 사용자의 세부 정보를 포함하게 됩니다.
+            OAuth2User oauth2User = ((OAuth2AuthenticationToken) principal).getPrincipal();
+            // 인증된 사용자의 세부 정보(예: 이름, 이메일, 프로필 사진 등)를 담고 있는 'OAuth2User' 객체를 가져옵니다.
+            String email = oauth2User.getAttribute("email");
+            // 'OAuth2User' 객체에서 이메일 주소를 추출합니다. 이는 소셜 로그인 제공자가 제공하는 정보 중 하나입니다.
+            return memberRepository.findByEmail(email).orElse(null);
+            // 해당 이메일로 'Member' 객체를 데이터베이스에서 찾아 반환합니다.
+
+
         } else {
             throw new IllegalArgumentException("Unsupported principal type");
             // 어떤 타입에도 속하지 않을 때 예외 발생(예상치 못한 타입의 'Principal' 객체가 주어졌을 때 문제 발견을 위한 목적)
