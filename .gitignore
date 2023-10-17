@@ -16,7 +16,7 @@ build/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
-game/src/main/resources
+game/src/main/resources/
 
 ### IntelliJ IDEA ###
 .idea

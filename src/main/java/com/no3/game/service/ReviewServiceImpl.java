@@ -102,5 +102,5 @@ public class ReviewServiceImpl implements ReviewService{
         return reviews.stream()
                 .map(review -> entityToDTO(review, review.getMember(), review.getItem()))
                 .collect(Collectors.toList());
-    } // itemId에 해당하는 review 객체를 가지고 옴
+    } // itemId에 해당하는 리뷰들을 가지고 옴
 }
