@@ -170,15 +170,17 @@
                                 </div>
                             </div>
                         </th:block>
-                        <div class="anime__details__form">
+                        <div class="anime__details__form" th:if="${hasOrdered}">
                             <div class="section-title">
                                 <h5>Your Comment</h5>
                             </div>
                             <form action="#">
-                                <textarea placeholder="Your Comment"></textarea>
-                                <button type="submit"><i class="fa fa-location-arrow"></i> Review</button>
+                                <!-- 주문이 취소된 경우와 아닌 경우에 따라 placeholder 값을 변경한다. -->
+                                <textarea th:placeholder="${orderCancelled} ? '주문을 취소한 경우 후기를 작성할 수 없습니다.' : 'Your Comment'"></textarea>
+                                <button type="submit" th:disabled="${orderCancelled}"><i class="fa fa-location-arrow"></i> Review</button>
                             </form>
                         </div>
+
                     </div>
                 </div>
             </div>

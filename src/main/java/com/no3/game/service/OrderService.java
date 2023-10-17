@@ -1,5 +1,6 @@
 package com.no3.game.service;
 
+import com.no3.game.constant.OrderStatus;
 import com.no3.game.dto.OrderDto;
 import com.no3.game.dto.OrderHistDto;
 import com.no3.game.dto.OrderItemDto;
@@ -26,11 +27,8 @@ import java.util.List;
 public class OrderService {
 
     private final ItemRepository itemRepository;
-
     private final MemberRepository memberRepository;
-
     private final OrderRepository orderRepository;
-
     private final ItemImgRepository itemImgRepository;
 
     public Long order(OrderDto orderDto, String email){
@@ -120,5 +118,8 @@ public class OrderService {
         return order.getId();
     }
 
+    public OrderStatus getOrderStatusForItem(String email, Long itemId) {
+        return orderRepository.findOrderStatusByEmailAndItemId(email, itemId).orElse(null);
+    }
 
 }
