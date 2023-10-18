@@ -27,6 +27,11 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
+    private BooleanExpression isItemAvailable(){
+        return QItem.item.itemSellStatus.eq(ItemSellStatus.SELL);
+    } // 현재 판매 중인 상태의 상품만 조회되도록 함
+
+
     private BooleanExpression searchSellStatusEq(ItemSellStatus searchSellStatus){
         return searchSellStatus == null ? null : QItem.item.itemSellStatus.eq(searchSellStatus);
     }
@@ -104,11 +109,15 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                                 itemImg.imgUrl,
                                 item.price,
                                 item.genre,
-                                item.developer)
+                                item.developer,
+                                item.itemSellStatus)
                 )
                 .from(itemImg)
                 .join(itemImg.item, item)
-                .where(itemImg.repimgYn.eq("Y"))
+                // .where(itemImg.repimgYn.eq("Y"))
+                .where(itemImg.repimgYn.eq("Y"),
+                        itemNmLike(itemSearchDto.getSearchQuery()),
+                        isItemAvailable())
                 .where(itemNmLike(itemSearchDto.getSearchQuery()))
                 .orderBy(item.id.desc())
                 .offset(pageable.getOffset())

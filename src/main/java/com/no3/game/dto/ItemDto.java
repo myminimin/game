@@ -1,5 +1,6 @@
 package com.no3.game.dto;
 
+import com.no3.game.constant.ItemSellStatus;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -21,7 +22,7 @@ public class ItemDto {
     private String developer; // 개발사
     private String itemDetail;    // detail 내용
 
-    private String sellStatCd;    // 상품 판매 상태
+    private String itemSellStatus;    // 상품 판매 상태
 
     private LocalDate relaseyear;     // 발매일
 

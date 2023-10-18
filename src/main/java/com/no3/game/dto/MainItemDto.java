@@ -21,10 +21,12 @@ public class MainItemDto {
 
     private String developer; // 개발사
 
+    private ItemSellStatus itemSellStatus;
+
 
     @QueryProjection
     public MainItemDto(Long id, String itemNm, String itemDetail, String imgUrl,Integer price,
-                       String genre, String developer){
+                       String genre, String developer, ItemSellStatus itemSellStatus){
         this.id = id;
         this.itemNm = itemNm;
         this.itemDetail = itemDetail;
@@ -32,5 +34,6 @@ public class MainItemDto {
         this.price = price;
         this.genre = genre;
         this.developer = developer;
+        this.itemSellStatus = itemSellStatus;
     }
 }

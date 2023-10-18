@@ -25,7 +25,8 @@
               </div>
             </div>
             <div class="row">
-              <th:block th:each="item, status: ${items.getContent()}">
+              <th:block th:each="item, status: ${items.getContent()}"
+                        th:if="${item.itemSellStatus != T(com.no3.game.constant.ItemSellStatus).DISCONTINUED}">
               <div class="col-lg-4 col-md-6 col-sm-6">
                 <div class="product__item">
                   <div class="product__item__pic set-bg" th:style="'background-image: url(' + ${item.imgUrl} + ')'">

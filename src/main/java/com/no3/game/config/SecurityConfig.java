@@ -58,7 +58,7 @@ public class SecurityConfig {
 
         http.csrf()
                 .ignoringAntMatchers("/oauth2/**");
-        // Oauth2 인증과 관련된 경로에서는 CSRF 토큰의 확인이 생략 (테스트용)
+        // OAuth2 인증과 관련된 경로에서는 CSRF 토큰의 확인이 생략 (테스트용)
         // CSRF 공격 가능성, 의도하지 않은 접근과 같은 보안상 문제 발생할 수 있음
 
         return http.build(); //SecurityFilterChain을 생성하고 반환
