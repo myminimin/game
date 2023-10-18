@@ -137,8 +137,8 @@ public class ItemController {
                     model.addAttribute("orderCancelled", true);
                 }
             }
+            model.addAttribute("member", member); // 이 부분 추가
         }
-
         return "item/itemDtl";
     }
 

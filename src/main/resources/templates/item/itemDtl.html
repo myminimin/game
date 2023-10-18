@@ -91,7 +91,49 @@
             });
         }
 
+        function saveReview() {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            var reviewText = $("textarea").val();
+
+            // 현재 로그인한 사용자의 이메일과 아이템 아이디를 가져옵니다.
+            var memberEmail = $("#loggedInUserEmail").val();
+            var itemId = $("#itemId").val();
+
+            var data = {
+                text: reviewText,
+                itemNm: String(itemId),  // itemId를 문자열로 변환
+                writerEmail: memberEmail
+            };
+
+            $.ajax({
+                url: "/review/registerAjax",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                dataType: "text",
+                cache: false,
+                success: function(response) {
+                    console.log("Success response received");
+                    location.reload();
+                },
+                error: function(jqXHR, status, error) {
+                    console.log("Error response received: ", status, error);
+                },
+            });
+        }
+
         $(document).ready(function() {
+            // 리뷰 버튼에 이벤트 리스너 추가
+            $("button[type='submit']").on("click", function(event) {
+                event.preventDefault();  // 폼의 기본 제출 이벤트를 막습니다.
+                saveReview();
+            });
+
             $('.review-time').each(function() {
                 var time = $(this).text();
                 var fromNow = moment(time).fromNow();
@@ -99,9 +141,6 @@
             });
         });
 
-        $(document).ready(function(){
-
-        });
 
     </script>
 
@@ -110,6 +149,7 @@
 <div layout:fragment="content">
 
     <input type="hidden" id="itemId" th:value="${item.id}">
+    <input type="hidden" id="loggedInUserEmail" th:value="${member.email}">
 
     <!-- Anime Section Begin -->
     <section class="anime-details spad">

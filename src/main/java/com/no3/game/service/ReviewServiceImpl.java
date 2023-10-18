@@ -34,8 +34,8 @@ public class ReviewServiceImpl implements ReviewService{
     public Long register(ReviewDto dto) {
         log.info(dto);
 
-        Item item = itemRepository.findByTitle(dto.getItemNm())
-                .orElseThrow(() -> new IllegalArgumentException("No item found with title: " + dto.getItemNm()));
+        Item item = itemRepository.findById(Long.parseLong(dto.getItemNm()))
+                .orElseThrow(() -> new IllegalArgumentException("No item found with ID: " + dto.getItemNm()));
 
         Member member = memberRepository.findByEmail(dto.getWriterEmail())
                 .orElseThrow(() -> new IllegalArgumentException("No member found with email: " + dto.getWriterEmail()));

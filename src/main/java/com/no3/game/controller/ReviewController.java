@@ -5,12 +5,10 @@ import com.no3.game.dto.ReviewDto;
 import com.no3.game.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -76,6 +74,19 @@ public class ReviewController {
 
         return "redirect:/review/read";
 
+    }
+
+    @PostMapping("/registerAjax")
+    public ResponseEntity<?> registerAjax(@RequestBody ReviewDto reviewDto) {
+        try {
+            log.info("reviewDto: " + reviewDto);
+
+            Long id = reviewService.register(reviewDto);
+
+            return ResponseEntity.ok("Review saved successfully with ID: " + id);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
     }
 
 }
