@@ -58,26 +58,29 @@
               <br>
               <br>
               <br>
-
             </form>
+          </div>
+        </div>
+        <!-- 회원 탈퇴 -->
+        <div class="col-lg-6">
+          <div class="login__form">
+            <h3>Cancle</h3>
+            <div class="input__item">
+              <form action="/members/delete" method="post">
+                <div class="input__item">
+                  <input type="password" name="password" id="password" placeholder="Password">
+                  <span class="icon_lock"></span>
+                </div>
+                <button type="submit" class="site-btn">cancle</button>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
   <!-- Signup Section End -->
-
-  <h3>Cancle</h3> <!-- 회원 탈퇴 -->
-  <div class="input__item">
-    <form action="/members/delete" method="post">
-      <div class="input__item">
-        <input type="password" name="password" id="password" placeholder="Password">
-        <span class="icon_lock"></span>
-      </div>
-      <button type="submit" class="site-btn">cancle</button>
-      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-    </form>
-  </div>
 
 </div>
 
