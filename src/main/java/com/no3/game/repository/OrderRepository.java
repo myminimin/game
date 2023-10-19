@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,5 +28,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT o.orderStatus FROM Order o JOIN o.orderItems oi WHERE o.member.email = :email AND oi.item.id = :itemId")
     Optional<OrderStatus> findOrderStatusByEmailAndItemId(String email, Long itemId);
     // 현재 로그인한 회원의 구매한 아이템 조회용
+
+    @Transactional
+    List<Order> findByMemberId(Long memberId);
 
 }

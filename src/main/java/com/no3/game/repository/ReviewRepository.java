@@ -11,8 +11,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReviewRepository extends JpaRepository<Review, Long>, SearchReviewRepository {
 
@@ -21,9 +23,14 @@ public interface ReviewRepository extends JpaRepository<Review, Long>, SearchRev
     // Review 클래스의 Member에 대한 Fetch 방식이 LAZY이기 때문에 한 번에 Review와 Member 객체를 조회할 수 없어서
     // @EntityGraph를 이용해 Review 객체를 가져올 때 Member 객체를 로딩하게 함
 
+    List<Review> findByMemberId(Long memberId);
+
     @Modifying
     @Query("delete from Review mr where mr.member = :member")
     void deleteByMember(Member member);
+
+    @Transactional
+    Optional<Review> deleteReviewByMember(Member member);
 
     @Query(value ="SELECT r, m, i FROM Review r LEFT JOIN r.member m LEFT JOIN r.item i ")
     Page<Object[]> getReviewWithAll(Pageable pageable);

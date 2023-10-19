@@ -29,12 +29,18 @@
                                 <li>
                                     <a class="nav-link" href="/review/list">커뮤니티</a>
                                 </li>
+                                <li>
+                                    <a class="nav-link" href="#">공지사항</a>
+                                </li>
                                 <!-- ONLY USER  -->
                                 <li sec:authorize="isAuthenticated() and !hasAuthority('ROLE_ADMIN')">
                                     <a class="nav-link" href="/cart">장바구니</a>
                                 </li>
                                 <li sec:authorize="isAuthenticated() and !hasAuthority('ROLE_ADMIN')">
                                     <a class="nav-link" href="/orders">구매이력</a>
+                                </li>
+                                <li sec:authorize="isAuthenticated() and !hasAuthority('ROLE_ADMIN')">
+                                    <a class="nav-link" href="/members/loginInfo">마이페이지</a>
                                 </li>
                                 <!-- ONLY ADMIN -->
                                 <li sec:authorize="hasAnyAuthority('ROLE_ADMIN')">

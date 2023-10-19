@@ -29,17 +29,9 @@
     </script>
 </th:block>
 
-<!-- 사용자 CSS 추가 -->
-<th:block layout:fragment="css">
-    <style>
-        select{
-            margin-right:10px;
-        }
-    </style>
-</th:block>
 
-<div layout:fragment="content">
-
+<div class="container" layout:fragment="content">
+    <section class="login spad">
     <form th:action="@{'/admin/items/' + ${items.number}}" role="form" method="get" th:object="${items}">
         <table class="table">
             <thead>
@@ -110,7 +102,7 @@
             <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
         </div>
     </form>
-
+    </section>
 </div>
 
 </html>

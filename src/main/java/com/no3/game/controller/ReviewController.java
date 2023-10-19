@@ -87,6 +87,6 @@ public class ReviewController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
-    }
+    } // 리뷰 게시판이 아니라 itemDtl에서 AJAX 활용해 댓글 작성하게 처리
 
 }

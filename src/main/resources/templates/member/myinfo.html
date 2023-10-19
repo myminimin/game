@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}" lang="ko">
+<head>
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
+<div layout:fragment="content">
+
+  <!-- Breadcrumb Begin -->
+  <div class="breadcrumb-option">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="breadcrumb__links">
+            <a href="/"><i class="fa fa-home"></i> Home</a>
+            <span>My Page</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Breadcrumb End -->
+
+  <!-- Normal Breadcrumb Begin -->
+  <section class="normal-breadcrumb set-bg" data-setbg="img/normal-breadcrumb.jpg">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <div class="normal__breadcrumb__text">
+            <h2>My Page</h2>
+            <p>Check your member information and purchase history!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Normal Breadcrumb End -->
+
+  <!-- Signup Section Begin --> <!-- 회원정보 출력-->
+  <section class="signup spad">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="login__form">
+            <h3>Your Information</h3>
+            <form role="form">
+              <div class="input__item">
+                <input type="text" th:field="${member.name}" readonly>
+                <span class="icon_profile"></span>
+              </div>
+              <div class="input__item">
+                <input type="text" th:field="${member.email}" readonly>
+                <span class="icon_mail"></span>
+              </div>
+              <br>
+              <br>
+              <br>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Signup Section End -->
+
+  <h3>Cancle</h3> <!-- 회원 탈퇴 -->
+  <div class="input__item">
+    <form action="/members/delete" method="post">
+      <div class="input__item">
+        <input type="password" name="password" id="password" placeholder="Password">
+        <span class="icon_lock"></span>
+      </div>
+      <button type="submit" class="site-btn">cancle</button>
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    </form>
+  </div>
+
+</div>
+
+</html>
