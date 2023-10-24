@@ -7,3 +7,6 @@ JDK 버전 : JDK 17
 관리 툴 : GitHub
 
 ![image](https://github.com/myminimin/game/assets/140282968/d1780740-62ea-4bf8-98fa-224a2862fff1)
+
+문제 해결 과정
+https://velog.io/@rancho0408/TIL-8nxlqd7g
