@@ -56,7 +56,7 @@ public class OrderController {
         } catch(Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-    }
+    } // 상세페이지에서 주문하기
 
     @GetMapping(value = {"/orders", "/orders/{page}"})
     public String orderHist(@PathVariable("page") Optional<Integer> page, Principal principal, Model model){
@@ -70,7 +70,8 @@ public class OrderController {
         model.addAttribute("maxPage", 5);
 
         return "order/orderHist";
-    }
+    } // 주문 내역 페이지
+
 
     @PostMapping("/order/{orderId}/cancel")
     public @ResponseBody ResponseEntity cancelOrder(@PathVariable("orderId") Long orderId , Principal principal){

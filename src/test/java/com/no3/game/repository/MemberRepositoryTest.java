@@ -25,7 +25,7 @@ public class MemberRepositoryTest {
 
         IntStream.rangeClosed(1,5).forEach(i -> {
             Member member = Member.builder()
-                    .email("a"+i +"@naver.com")
+                    .email("b"+i +"@naver.com")
                     .password("1234")
                     .name("test"+i)
                     .role(Role.USER)

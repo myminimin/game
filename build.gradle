@@ -92,3 +92,7 @@ configurations {
     }
     querydsl.extendsFrom compileClasspath
 }
+
+bootJar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

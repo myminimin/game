@@ -58,13 +58,13 @@ public class MemberController {
 
     @GetMapping(value = "/login")
     public String loginMember(){
-        return "/member/memberLoginForm";
+        return "member/memberLoginForm";
     }
 
     @GetMapping(value = "/login/error")
     public String loginError(Model model){
         model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요");
-        return "/member/memberLoginForm";
+        return "member/memberLoginForm";
     }
 
     // 마이페이지
@@ -85,10 +85,10 @@ public class MemberController {
         boolean result = memberService.deleteMember(userDetails.getUsername(), password);
 
         if (result) {
-            return "redirect:/members/logout";
+            return "redirect:logout";
         } else {
             model.addAttribute("wrongPassword", "비밀번호가 맞지 않습니다.");
-            return "/members/delete";
+            return "members/delete";
         }
     }
 

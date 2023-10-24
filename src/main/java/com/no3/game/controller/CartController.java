@@ -52,7 +52,7 @@ public class CartController {
         } catch(Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-    }
+    } // 장바구니 버튼 클릭 시
 
     @GetMapping(value = "/cart")
     public String orderHist(Principal principal, Model model){
@@ -60,7 +60,7 @@ public class CartController {
         List<CartDetailDto> cartDetailList = cartService.getCartList(member.getEmail()); // 이 멤버의 Email을 전달
         model.addAttribute("cartItems", cartDetailList);
         return "cart/cartList";
-    }
+    } // 장바구니 페이지
 
 
     @PatchMapping(value = "/cartItem/{cartItemId}")
@@ -71,7 +71,7 @@ public class CartController {
         }
 
         return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
-    }
+    } // 수정 기능인 것 같은데 현재 사용 안함
 
     @DeleteMapping(value = "/cartItem/{cartItemId}")
     public @ResponseBody ResponseEntity deleteCartItem(@PathVariable("cartItemId") Long cartItemId, Principal principal){
@@ -83,7 +83,7 @@ public class CartController {
         cartService.deleteCartItem(cartItemId);
 
         return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
-    }
+    } // 장바구니 아이템 삭제
 
     @PostMapping(value = "/cart/orders")
     public @ResponseBody ResponseEntity orderCartItem(@RequestBody CartOrderDto cartOrderDto, Principal principal){
@@ -107,7 +107,7 @@ public class CartController {
         Long orderId = cartService.orderCartItem(cartOrderDtoList, member.getEmail());
         return new ResponseEntity<Long>(orderId, HttpStatus.OK);
 
-    }
+    } // 장바구니 상품 구매
 
 
 }

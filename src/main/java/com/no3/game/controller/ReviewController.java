@@ -22,7 +22,7 @@ public class ReviewController {
     @GetMapping("/register")
     public void register(){
 
-    }
+    } // 리뷰 등록 페이지 (사용 안함)
 
     @PostMapping("/register")
     public String register(ReviewDto reviewDto, RedirectAttributes redirectAttributes){
@@ -32,15 +32,16 @@ public class ReviewController {
 
         redirectAttributes.addFlashAttribute("msg", id);
 
-        return "redirect:/review/list";
-    }
+        return "redirect:review/list";
+    } // 리뷰 등록 (사용 안함)
 
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, Model model){
         log.info("Review list..." + pageRequestDTO);
 
         model.addAttribute("result", reviewService.getList(pageRequestDTO));
-    }
+
+    } // 리뷰 전체 출력
 
     @GetMapping({"/read", "/modify" })
     public void read(@ModelAttribute("requestDTO") PageRequestDTO pageRequestDTO, Long id, Model model){
@@ -52,7 +53,6 @@ public class ReviewController {
         log.info(reviewDto);
 
         model.addAttribute("dto", reviewDto);
-
     }
 
     @PostMapping("/modify")
@@ -72,7 +72,7 @@ public class ReviewController {
 
         redirectAttributes.addAttribute("id",dto.getId());
 
-        return "redirect:/review/read";
+        return "redirect:review/read";
 
     }
 

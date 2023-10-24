@@ -43,7 +43,7 @@ public class ItemController {
         model.addAttribute("itemFormDto", new ItemFormDto());
 
         return "item/itemForm";
-    }
+    } // 관리자 - 등록 페이지
 
     @PostMapping(value = "/admin/item/new")
     public String itemNew(@Valid ItemFormDto itemFormDto, BindingResult bindingResult, Model model,
@@ -68,7 +68,7 @@ public class ItemController {
         }
 
         return "redirect:/";
-    }
+    } // 관리자 - 아이템 등록
 
     @GetMapping(value = "/admin/item/{itemId}")
     public String itemDtl(@PathVariable("itemId") Long itemId, Model model){
@@ -82,7 +82,7 @@ public class ItemController {
             return "item/itemForm";
         }
         return "item/itemForm";
-    }
+    } // 관리자 - 수정 페이지
 
     @PostMapping(value = "/admin/item/{itemId}")
     public String itemUpdate(@Valid ItemFormDto itemFormDto, BindingResult bindingResult,
@@ -104,7 +104,7 @@ public class ItemController {
         }
 
         return "redirect:/";
-    }
+    } // 관리자 - 아이템 수정
 
     @GetMapping(value = {"/admin/items", "/admin/items/{page}"})
     public String itemManage(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, Model model){
@@ -117,7 +117,7 @@ public class ItemController {
         model.addAttribute("maxPage", 5);
 
         return "item/itemMng";
-    }
+    } // 관리자 - 아이템 상세 페이지
 
     @GetMapping(value = "/item/{itemId}")
     public String itemDtl(Model model, @PathVariable("itemId") Long itemId, Principal principal) {
@@ -140,7 +140,7 @@ public class ItemController {
             model.addAttribute("member", member); // 이 부분 추가
         }
         return "item/itemDtl";
-    }
+    } // 상세 페이지
 
 
 

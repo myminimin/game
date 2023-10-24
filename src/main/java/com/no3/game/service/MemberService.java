@@ -6,6 +6,7 @@ import com.no3.game.entity.Order;
 import com.no3.game.entity.Review;
 import com.no3.game.repository.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -25,6 +26,7 @@ import java.util.Optional;
 @Service
 @Transactional // 로직을 처리하다 에러가 발생하면 변경된 데이터를 로직을 수행하기 이전 상태로 콜백 시켜줌
 @RequiredArgsConstructor
+@Log4j2
 public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final CartRepository cartRepository;
@@ -77,9 +79,19 @@ public class MemberService implements UserDetailsService {
             // 인증된 사용자의 세부 정보를 담고 있는 'OAuth2User' 객체를 가져옴
             String email = oauth2User.getAttribute("email");
             // 'OAuth2User' 객체에서 이메일 주소를 추출.
-            return memberRepository.findByEmail(email).orElse(null);
-            // 해당 이메일로 'Member' 객체를 데이터베이스에서 찾아 반환
+            // 로그 추가
+            log.info("Using OAuth2AuthenticationToken, email: {}", email);
 
+            Member member = memberRepository.findByEmail(email).orElse(null);
+
+            // 로그 추가
+            if (member == null) {
+                log.warn("No member found for email: {}", email);
+            } else {
+                log.info("Member found: {}", member);
+            }
+
+            return member;
         } else {
             throw new IllegalArgumentException("Unsupported principal type");
             // 어떤 타입에도 속하지 않을 때 예외 발생(예상치 못한 타입의 'Principal' 객체가 주어졌을 때 문제 발견을 위한 목적)

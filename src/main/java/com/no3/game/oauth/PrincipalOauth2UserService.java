@@ -4,8 +4,10 @@ import com.no3.game.auth.PrincipalDetails;
 import com.no3.game.constant.Role;
 import com.no3.game.entity.Member;
 import com.no3.game.repository.MemberRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -17,6 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Service
+@Log4j2
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -32,6 +35,9 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         // userRequest 정보 -> loadUser함수 호출 -> 구글로부터 회원 프로필을 받아준다.
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
+        System.out.println("OAuth2 User Info: " + oAuth2User.getAttributes());
+        // 또는 로깅 라이브러리를 사용하여 로그로 기록할 수도 있습니다.
+        log.debug("OAuth2 User Info: {}", oAuth2User.getAttributes());
         OAuth2UserInfo oAuth2UserInfo = null;
         if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
             oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
@@ -51,7 +57,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String email = oAuth2UserInfo.getEmail();
         Role role = Role.USER;
 
-        Member userEntity = userRepository.findByName(username);
+        Member userEntity = userRepository.findByName(username)
+                .orElseThrow(() -> new UsernameNotFoundException("오류 해결 좀."));
 
         if (userEntity == null) {
             userEntity = Member.builder()

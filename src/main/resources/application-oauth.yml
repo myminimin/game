@@ -18,7 +18,7 @@ spring:
           google:
             clientId: 796340878442-c5ndt5n5kntlvmkl1mgpba69amtaaahs.apps.googleusercontent.com
             clientSecret: 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
-            redirect-uri: http://localhost/login/oauth2/code/google
+            redirect-uri: http://ez304.iptime.org:8003/login/oauth2/code/google
             scope:
               - email
               - profile
@@ -26,7 +26,7 @@ spring:
           naver:
             clientId: Jd_CniKiWJqxM4v7qH1w
             client-secret: numUr9t6pN
-            redirect-uri: http://localhost/login/oauth2/code/naver
+            redirect-uri: http://ez304.iptime.org:8003/login/oauth2/code/naver
             authorization-grant-type: authorization_code
             scope:
               - name
@@ -37,7 +37,7 @@ spring:
           kakao:
             clientId: 0238245bbb90e2966bfb79025001f6b7
             client-secret: WPAGrX5zFnKhkYcAnqWFXwdHbIm0B1B7
-            redirect-uri: http://localhost/login/oauth2/code/kakao
+            redirect-uri: http://ez304.iptime.org:8003/login/oauth2/code/kakao
             authorization-grant-type: authorization_code
             scope:
               - profile_nickname
