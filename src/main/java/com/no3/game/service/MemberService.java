@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -77,19 +78,27 @@ public class MemberService implements UserDetailsService {
             // - 이 토큰은 인증된 사용자의 세부 정보를 포함
             OAuth2User oauth2User = ((OAuth2AuthenticationToken) principal).getPrincipal();
             // 인증된 사용자의 세부 정보를 담고 있는 'OAuth2User' 객체를 가져옴
-            String email = oauth2User.getAttribute("email");
-            // 'OAuth2User' 객체에서 이메일 주소를 추출.
-            // 로그 추가
-            log.info("Using OAuth2AuthenticationToken, email: {}", email);
 
-            Member member = memberRepository.findByEmail(email).orElse(null);
+            String id = null;
+            Object idAttribute = oauth2User.getAttribute("id");
 
-            // 로그 추가
-            if (member == null) {
-                log.warn("No member found for email: {}", email);
+            if (idAttribute != null) {
+                id = idAttribute.toString();
             } else {
-                log.info("Member found: {}", member);
+                Object subAttribute = oauth2User.getAttribute("sub");
+                if (subAttribute != null) {
+                    id = subAttribute.toString();
+                } else {
+                    Map<String, Object> responseAttributes = (Map<String, Object>) oauth2User.getAttribute("response");
+                    if (responseAttributes != null) {
+                        Object responseIdAttribute = responseAttributes.get("id");
+                        if (responseIdAttribute != null) {
+                            id = responseIdAttribute.toString();
+                        }
+                    }
+                }
             }
+            Member member = memberRepository.findByProviderId(id);
 
             return member;
         } else {
